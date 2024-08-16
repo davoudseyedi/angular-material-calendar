@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>{{ data.appointment ? 'Edit Appointment' : 'Create Appointment' }}</h2>
+
+<mat-dialog-content>
+  <!-- Start Date and Time -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="startDatePicker" [(ngModel)]="data.startDate"
+           (click)="startDatePicker.open()"
+           placeholder="Start Date">
+    <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #startDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="time" [(ngModel)]="startTime" placeholder="Start Time">
+  </mat-form-field>
+
+  <!-- End Date and Time -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="endDatePicker" [(ngModel)]="data.endDate"
+           (click)="endDatePicker.open()"
+           placeholder="End Date">
+    <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #endDatePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="time" [(ngModel)]="endTime" placeholder="End Time">
+  </mat-form-field>
+
+  <!-- Title -->
+  <mat-form-field>
+    <input matInput placeholder="Title" [(ngModel)]="title">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onSave()">Save</button>
+  <button mat-button *ngIf="data.appointment" (click)="onDelete()">Delete</button>
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+</mat-dialog-actions>
