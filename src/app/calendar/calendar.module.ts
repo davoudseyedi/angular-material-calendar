@@ -8,6 +8,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
 import {CalendarRoutingModule} from "./calendar-routing.module";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {CalendarRoutingModule} from "./calendar-routing.module";
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    DragDropModule
   ],
 
 })

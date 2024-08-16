@@ -9,7 +9,6 @@
     </button>
     <button mat-flat-button color="primary" (click)="openDialog()">+ Create Appointment</button>
   </div>
-
   <div class="calendar-grid">
     <div *ngFor="let day of generateCalendarDays()"
          class="calendar-day"
@@ -18,15 +17,24 @@
       <button mat-icon-button (click)="openDialog(day)">
         <mat-icon>add_circle</mat-icon>
       </button>
-      <div *ngFor="let appointment of getAppointmentsForDay(day)" class="appointment-card" [ngStyle]="{ 'background-color': appointment.color }">
-        <span class="appointment-title">{{ appointment.title }}</span>
-        <div class="content">
-          <div class="appointment-times">
-            {{ appointment.startDate | date: 'short' }} - {{ appointment.endDate | date: 'short' }}
+      <div cdkDropList
+           class="calendar-container"
+           (cdkDropListDropped)="onDrop($event)"
+           [cdkDropListData]="getAppointmentsForDay(day)">
+        <div *ngFor="let appointment of getAppointmentsForDay(day)"
+             cdkDrag
+             class="appointment-card"
+             [cdkDragData]="appointment"
+             [ngStyle]="{ 'background-color': appointment.color }">
+          <span class="appointment-title">{{ appointment.title }}</span>
+          <div class="content">
+            <div class="appointment-times">
+              {{ appointment.startDate | date: 'short' }} - {{ appointment.endDate | date: 'short' }}
+            </div>
+            <button mat-icon-button class="edit-button" (click)="openDialog(day, appointment)">
+              <mat-icon>edit</mat-icon>
+            </button>
           </div>
-          <button mat-icon-button class="edit-button" (click)="openDialog(day, appointment)">
-            <mat-icon>edit</mat-icon>
-          </button>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {DatePipe, NgClass, NgForOf, NgStyle} from "@angular/common";
 import {Appointment} from "../interfaces/appointment.interface";
+import {CdkDrag, CdkDragDrop, CdkDropList} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-calendar',
@@ -20,7 +21,9 @@ import {Appointment} from "../interfaces/appointment.interface";
     MatButton,
     DatePipe,
     NgClass,
-    NgStyle
+    NgStyle,
+    CdkDropList,
+    CdkDrag,
   ],
   styleUrls: ['./calendar.component.scss']
 })
@@ -30,6 +33,44 @@ export class CalendarComponent {
   appointments: Appointment[] = [];
 
   constructor(public dialog: MatDialog) {}
+
+
+  onDrop(event: CdkDragDrop<Appointment[]>) {
+    const draggedAppointment = event.item.data as Appointment;
+    const dropDate = this.getDropDateFromEvent(event);
+
+    if (draggedAppointment && dropDate) {
+      // Find and update the appointment in the list
+      const index = this.appointments.indexOf(draggedAppointment);
+      if (index > -1) {
+        this.appointments[index] = {
+          ...draggedAppointment,
+          startDate: dropDate.startDate,
+          endDate: dropDate.endDate
+        };
+      }
+
+      // Notify Angular to refresh the view
+      this.appointments = [...this.appointments];
+      console.log('Appointment moved:', this.appointments[index]);
+    }
+  }
+
+  getDropDateFromEvent(event: CdkDragDrop<Appointment[]>): { startDate: Date, endDate: Date } {
+    const dropContainerElement = event.container.element.nativeElement;
+    const dayNumberElement = dropContainerElement.querySelector('.day-number');
+    const dayNumberText = dayNumberElement?.textContent?.trim();
+    const dayNumber = parseInt(dayNumberText || '0', 10);
+
+    // Log values for debugging
+    console.log('Day Number:', dayNumber);
+
+    const dropDate = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth(), dayNumber);
+    return {
+      startDate: dropDate,
+      endDate: new Date(dropDate.getTime() + 60 * 60 * 1000) // 1 hour duration
+    };
+  }
 
   generateCalendarDays() {
     const daysInMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() + 1, 0).getDate();
