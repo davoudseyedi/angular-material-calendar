@@ -50,7 +50,6 @@ export class CalendarComponent {
         };
       }
 
-      // Notify Angular to refresh the view
       this.appointments = [...this.appointments];
       console.log('Appointment moved:', this.appointments[index]);
     }
@@ -62,7 +61,6 @@ export class CalendarComponent {
     const dayNumberText = dayNumberElement?.textContent?.trim();
     const dayNumber = parseInt(dayNumberText || '0', 10);
 
-    // Log values for debugging
     console.log('Day Number:', dayNumber);
 
     const dropDate = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth(), dayNumber);
@@ -81,7 +79,7 @@ export class CalendarComponent {
     return days;
   }
 
-  openDialog(date: Date = new Date(), appointment:any = null): void {
+  openDialog(date: Date = new Date(), appointment: Appointment | null = null): void {
     const dialogRef = this.dialog.open(AppointmentDialogComponent, {
       width: '400px',
       data: { startDate: date, endDate: date, appointment }
@@ -92,11 +90,12 @@ export class CalendarComponent {
         if (result.action === 'add') {
           this.appointments.push(result.data);
         } else if (result.action === 'update') {
-          appointment.title = result.data.title;
-          appointment.startDate = result.data.startDate;
-          appointment.endDate = result.data.endDate;
+          const index = this.appointments.findIndex(a => a === appointment!);
+          if (index > -1) {
+            this.appointments[index] = result.data;
+          }
         } else if (result.action === 'delete') {
-          this.appointments = this.appointments.filter(a => a !== appointment);
+          this.appointments = this.appointments.filter(a => a !== appointment!);
         }
       }
     });
