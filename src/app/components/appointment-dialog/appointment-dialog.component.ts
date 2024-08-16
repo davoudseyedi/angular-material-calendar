@@ -1,17 +1,18 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle
+  MatDialogTitle,
 } from "@angular/material/dialog";
 import {MatFormField} from "@angular/material/form-field";
 import {MatButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {Appointment} from "../../interfaces/appointment.interface";
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -28,24 +29,32 @@ import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/m
     FormsModule,
     MatDatepickerToggle,
     MatDatepicker,
-    MatDatepickerInput
+    MatDatepickerInput,
+    ReactiveFormsModule,
   ],
   styleUrl: './appointment-dialog.component.scss'
 })
-export class AppointmentDialogComponent {
-  title: string = '';
-  startTime: string = '00:00'; // Default time if not set
-  endTime: string = '00:00';   // Default time if not set
+export class AppointmentDialogComponent implements OnInit{
+
+  appointmentForm!: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<AppointmentDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: { appointment?: Appointment; color?: string }
   ) {
-    if (data.appointment) {
-      this.title = data.appointment.title;
-      this.startTime = this.formatTime(data.appointment.startDate);
-      this.endTime = this.formatTime(data.appointment.endDate);
-    }
+  }
+
+  ngOnInit(): void {
+    const today = new Date(); // Get today's date
+
+    this.appointmentForm = this.fb.group({
+      title: [this.data.appointment?.title || '', [Validators.required, Validators.minLength(3)]],
+      startDate: [this.data.appointment ? new Date(this.data.appointment.startDate) : today, Validators.required],
+      startTime: [this.data.appointment ? this.formatTime(new Date(this.data.appointment.startDate)) : '00:00', Validators.required],
+      endDate: [this.data.appointment ? new Date(this.data.appointment.endDate) : today, Validators.required],
+      endTime: [this.data.appointment ? this.formatTime(new Date(this.data.appointment.endDate)) : '00:00', Validators.required]
+    });
   }
 
   formatTime(date: Date): string {
@@ -55,30 +64,36 @@ export class AppointmentDialogComponent {
   }
 
   onSave(): void {
-    if (this.title.trim() && this.data.startDate && this.data.endDate) {
-      const startDate = new Date(this.data.startDate);
-      const endDate = new Date(this.data.endDate);
-
-      // Default to '00:00' if time fields are not set
-      const [startHours, startMinutes] = (this.startTime || '00:00').split(':').map(Number);
-      const [endHours, endMinutes] = (this.endTime || '00:00').split(':').map(Number);
-
-      // Set time on Date objects
-      startDate.setHours(startHours, startMinutes);
-      endDate.setHours(endHours, endMinutes);
-
-      this.dialogRef.close({
-        action: this.data.appointment ? 'update' : 'add',
-        data: {
-          title: this.title,
-          startDate: startDate,
-          endDate: endDate,
-          color: this.data.color
-        }
-      });
+    if (this.appointmentForm.invalid) {
+      return;
     }
-  }
 
+    const formValues = this.appointmentForm.value;
+    const startDate = new Date(formValues.startDate);
+    const endDate = new Date(formValues.endDate);
+
+    // Set time on Date objects
+    const [startHours, startMinutes] = formValues.startTime.split(':').map(Number);
+    const [endHours, endMinutes] = formValues.endTime.split(':').map(Number);
+
+    startDate.setHours(startHours, startMinutes);
+    endDate.setHours(endHours, endMinutes);
+
+    if (startDate > endDate) {
+      alert('End date must be after start date.');
+      return;
+    }
+
+    this.dialogRef.close({
+      action: this.data.appointment ? 'update' : 'add',
+      data: {
+        title: formValues.title,
+        startDate: startDate,
+        endDate: endDate,
+        color: this.data.color
+      }
+    });
+  }
 
   onDelete(): void {
     this.dialogRef.close({ action: 'delete', data: this.data.appointment });

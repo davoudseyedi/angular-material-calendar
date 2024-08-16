@@ -7,7 +7,6 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
-import {CalendarComponent} from "./calendar.component";
 import {CalendarRoutingModule} from "./calendar-routing.module";
 
 

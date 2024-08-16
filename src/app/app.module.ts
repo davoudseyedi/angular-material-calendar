@@ -11,6 +11,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatError} from "@angular/material/form-field";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatNativeDateModule} from "@angular/material/core";
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatError
   ],
   exports:[
     AppointmentDialogComponent

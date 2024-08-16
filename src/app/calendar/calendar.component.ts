@@ -5,6 +5,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {MatButton, MatIconButton} from "@angular/material/button";
 import {DatePipe, NgClass, NgForOf, NgStyle} from "@angular/common";
+import {Appointment} from "../interfaces/appointment.interface";
 
 @Component({
   selector: 'app-calendar',
@@ -26,7 +27,7 @@ import {DatePipe, NgClass, NgForOf, NgStyle} from "@angular/common";
 export class CalendarComponent {
 
   currentMonth: Date = new Date();
-  appointments: any[] = [];
+  appointments: Appointment[] = [];
 
   constructor(public dialog: MatDialog) {}
 
@@ -39,7 +40,7 @@ export class CalendarComponent {
     return days;
   }
 
-  openDialog(date: Date = new Date(), appointment: any = null): void {
+  openDialog(date: Date = new Date(), appointment:any = null): void {
     const dialogRef = this.dialog.open(AppointmentDialogComponent, {
       width: '400px',
       data: { startDate: date, endDate: date, appointment }
