@@ -13,10 +13,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 
-
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,11 +27,9 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    DragDropModule
+    DragDropModule,
   ],
-  exports:[
-    AppointmentDialogComponent
-  ],
+  exports: [],
   providers: [
     provideAnimationsAsync()
   ],

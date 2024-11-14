@@ -1,20 +1,73 @@
 {
   "root": true,
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    ".git/**",
+    "dist/**",
+    "node-modules/**",
+    "*.spec.ts",
+    "**/*.js",
+    "**/*.css",
+    "**/*.scss"
   ],
+  "globals": {
+    "window": true
+  },
   "overrides": [
     {
       "files": [
         "*.ts"
       ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
       "extends": [
-        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@typescript-eslint/no-explicit-any": "error",
+        "space-in-parens": "off",
+        "no-multiple-empty-lines": "error",
+        "indent": "off",
+        "no-multi-spaces": "error",
+        "no-unused-vars": "off",
+        "@typescript-eslint/member-ordering": [
+          "error",
+          { "default": [
+            "signature",
+            "public-static-field",
+            "protected-static-field",
+            "private-static-field",
+            "public-decorated-field",
+            "protected-decorated-field",
+            "private-decorated-field",
+            "public-instance-field",
+            "protected-instance-field",
+            "private-instance-field",
+            "public-constructor",
+            "protected-constructor",
+            "private-constructor",
+            "public-static-method",
+            "protected-static-method",
+            "private-static-method",
+            "public-decorated-method",
+            "protected-decorated-method",
+            "private-decorated-method",
+            "public-instance-method",
+            "protected-instance-method",
+            "private-instance-method"
+          ]
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {
@@ -30,7 +83,34 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": [
+              "Page",
+              "Component",
+              "Directive"
+            ]
+          }
+        ],
+        "no-useless-escape": "off", //Disallow unnecessary escape characters
+        "@typescript-eslint/ban-ts-comment": "off",
+        "no-prototype-builtins": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "prefer-const": "error", // Ensure variables are declared using const when possible
+        "no-else-return": "error", // Disallow else after a return in an if block
+        "no-unreachable": "error", // Detect unreachable code
+        "no-extra-semi": "error", // Disallow unnecessary semicolons
+        "no-const-assign": "error", // Disallow reassigning const variables
+        "no-dupe-args": "error", // Disallow duplicate function arguments
+        "no-dupe-keys": "error", // Disallow duplicate object keys
+        "no-dupe-else-if": "error", // Disallow duplicate conditions in else-if statements
+        "prefer-object-has-own": "error",
+        "no-console": "off", //Disallow console.log statements
+        "no-empty": "error", //Disallow empty block statements
+        "no-var": "error" // Require let or const instead of var
       }
     },
     {
@@ -38,10 +118,15 @@
         "*.html"
       ],
       "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "plugin:@angular-eslint/template/accessibility"
+        "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/no-positive-tabindex": "error", // Disallow positive tabindex values
+        "@angular-eslint/template/banana-in-box": "error", // Disallow the banana in a box syntax
+        "@angular-eslint/template/no-distracting-elements": "error", // Disallow certain elements which may be distracting or unnecessary
+        "@angular-eslint/template/click-events-have-key-events": "off", // Ensure that click events are accompanied by key events for accessibility
+        "@angular-eslint/template/no-any": "off" // Disallow the use of the `any` type in template variables
+      }
     }
   ]
 }

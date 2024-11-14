@@ -1,100 +1,57 @@
-#calendar{
-  width: 80%;
-  text-align: center;
-  margin: 0 auto;
-  padding: 1rem 0;
-}
-
 .calendar-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 16px;
-  border: 1px solid #ddd;
-  background: #f9f9f9;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-}
-
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* Adjust as needed */
-  gap: 1rem;
-}
-
-.calendar-day {
-  border: 1px solid #ccc;
-  padding: 10px;
-  position: relative;
-}
-
-.day-number {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-mat-card {
-  margin-top: 10px;
-}
-
-.calendar-day {
-  border: 1px solid #ccc;
-  padding: 10px;
-  position: relative;
-  min-height: 150px !important;
-  &.current-day {
-    background-color: #ffeb3b;
-    border: 2px solid #ff9800;
-  }
-}
-.appointment-card {
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 4px;
-  color: #555;
-  font-size: 14px;
-  cursor: move;
-  position: relative;
-
-  .content{
+  padding: 2rem;
+  .header {
     display: flex;
-    //flex-direction: column;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
+    width: 100%;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); // Adjust based on your layout needs
+    gap: 8px;
+    width: 100%;
+  }
+  .day {
+    border: 1px solid #e0e0e0;
+    padding: 8px;
+    position: relative;
+    min-height: 100px;
+    &.today {
+      background-color: #d0e9ff;
+    }
+
+    .day-number {
+      font-weight: bold;
+      height: 30px;
+    }
+
+    .appointment {
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: move;
+      background-color: #6472ff;
+      padding: 0px 10px;
+      border-radius: 4px;
+      color: #fff;
+    }
+  }
+
+  .appointment-actions button {
+    margin-left: 4px;
+  }
+  .add-button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
   }
 }
 
-.appointment-times {
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.edit-button {
-  margin-top: 10px;
-}
-.cdk-drag-placeholder {
-  background: rgba(0, 0, 0, 0.1);
-  border: 1px dashed #ccc;
-}
-
-.cdk-drag-preview {
-  border: 1px solid #333;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.cdk-drag {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: move;
-}
-
-.cdk-drop-list {
-  min-height: 100px; /* Adjust based on your layout */
-  border: 1px solid #ccc;
+.mb-0{
+  margin-bottom: 0 !important;
 }

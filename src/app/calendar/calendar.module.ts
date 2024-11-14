@@ -7,16 +7,27 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
-import {CalendarRoutingModule} from "./calendar-routing.module";
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {CalendarComponent} from "./calendar.component";
+import {MatIconModule} from "@angular/material/icon";
+import {RouterModule} from "@angular/router";
+import {AppointmentDialogComponent} from "../components/appointment-dialog/appointment-dialog.component";
+import {AppointmentComponent} from "../components/appointment/appointment.component";
 
 
 @NgModule({
   declarations: [
+    CalendarComponent
   ],
+  exports:[CalendarComponent],
   imports: [
+    RouterModule.forChild([
+      {
+        path: '',
+        component: CalendarComponent
+      }
+    ]),
     CommonModule,
-    CalendarRoutingModule,
     MatButtonModule,
     MatInputModule,
     MatFormFieldModule,
@@ -24,7 +35,10 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
-    DragDropModule
+    DragDropModule,
+    MatIconModule,
+    AppointmentDialogComponent,
+    AppointmentComponent
   ],
 
 })

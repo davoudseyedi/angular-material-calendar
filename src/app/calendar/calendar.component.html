@@ -1,43 +1,43 @@
-<div id="calendar">
-  <div class="calendar-header">
+<div class="calendar-container">
+  <div class="header">
     <button mat-icon-button (click)="changeMonth(-1)">
       <mat-icon>chevron_left</mat-icon>
     </button>
-    <h2>{{ currentMonth | date: 'MMMM y' }}</h2>
+    <h2 class="mb-0">{{ currentMonth | date: 'MMMM yyyy' }}</h2>
     <button mat-icon-button (click)="changeMonth(1)">
       <mat-icon>chevron_right</mat-icon>
     </button>
-    <button mat-flat-button color="primary" (click)="openDialog()">+ Create Appointment</button>
-  </div>
-  <div class="calendar-grid">
-    <div *ngFor="let day of generateCalendarDays()"
-         class="calendar-day"
-         [ngClass]="{ 'current-day': isToday(day) }">
-      <div class="day-number">{{ day.getDate() }}</div>
-      <button mat-icon-button (click)="openDialog(day)">
-        <mat-icon>add_circle</mat-icon>
-      </button>
-      <div cdkDropList
-           class="calendar-container"
-           (cdkDropListDropped)="onDrop($event)"
-           [cdkDropListData]="getAppointmentsForDay(day)">
-        <div *ngFor="let appointment of getAppointmentsForDay(day)"
-             cdkDrag
-             class="appointment-card"
-             [cdkDragData]="appointment"
-             [ngStyle]="{ 'background-color': appointment.color }">
-          <span class="appointment-title">{{ appointment.title }}</span>
-          <div class="content">
-            <div class="appointment-times">
-              {{ appointment.startDate | date: 'short' }} - {{ appointment.endDate | date: 'short' }}
-            </div>
-            <button mat-icon-button class="edit-button" (click)="openDialog(day, appointment)">
-              <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
+  <div class="calendar-grid">
+    <div
+      *ngFor="let day of daysInMonth; let i = index"
+      class="day"
+      cdkDropList
+      [id]="'dropList_' + i"
+      [ngClass]="{ 'today': isToday(day.date) }"
+      [cdkDropListData]="day.appointments"
+      [cdkDropListConnectedTo]="allDropLists"
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      <div class="day-number">{{ day.date | date: 'd' }}</div>
+
+      <div
+        *ngFor="let appointment of day.appointments"
+        class="appointment"
+        cdkDrag
+        [cdkDragData]="appointment">
+
+      <app-appointment [appointment]="appointment"
+                       [day]="day"
+                       (emitEditDialog)="openEditDialog($event)"
+                       (emitDeleteDialog)="deleteAppointment($event)"
+      ></app-appointment>
+
+      </div>
+      <button class="add-button" mat-button color="primary" (click)="openAddDialog(day)">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
