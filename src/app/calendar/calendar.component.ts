@@ -67,6 +67,7 @@ export class CalendarComponent implements OnInit {
         const index = event.day.appointments.indexOf(event.appointment);
         if (index > -1) {
           event.day.appointments[index] = result;
+          event.appointment = result;
         }
       }
     });

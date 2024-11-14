@@ -1,10 +1,17 @@
-<span>{{ appointment?.title }}</span>
-<span class="ml-2">{{ appointment?.startTime }}</span>
--
-<span class="ml-2">{{ appointment?.endTime }}</span>
-<button mat-icon-button (click)="openEditDialog(day, appointment);$event.stopPropagation()">
-  <mat-icon>edit</mat-icon>
-</button>
-<button mat-icon-button (click)="deleteAppointment(day, appointment);$event.stopPropagation()">
-  <mat-icon>delete</mat-icon>
-</button>
+<h4 class="mb-0">{{ appointment?.title }}</h4>
+
+<div class="times">
+  <span>{{ appointment?.startTime }}</span>
+  <span class="ml-2"> - {{ appointment?.endTime }}</span>
+
+ <div class="ml-auto">
+   <button mat-icon-button (click)="openEditDialog(day, appointment);$event.stopPropagation()">
+     <mat-icon>edit</mat-icon>
+   </button>
+   <button mat-icon-button (click)="deleteAppointment(day, appointment);$event.stopPropagation()">
+     <mat-icon>delete</mat-icon>
+   </button>
+ </div>
+</div>
+
+

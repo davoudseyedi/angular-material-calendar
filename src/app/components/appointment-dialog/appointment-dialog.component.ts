@@ -48,6 +48,11 @@ export class AppointmentDialogComponent {
       endDate: [data.appointment ? new Date(data.appointment.endDate) : today, Validators.required],
       endTime: [data.appointment ? data.appointment.endTime : '00:00', Validators.required]
     });
+
+    if (data.isEditMode) {
+      this.appointmentForm.get('startDate')?.disable();
+      this.appointmentForm.get('endDate')?.disable();
+    }
   }
 
 
