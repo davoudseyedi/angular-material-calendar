@@ -1,27 +1,68 @@
-# PayeverTask
-## A simple calendar with Angular Material & CDK
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.1.
+# AngularSSR
+
+Angular 17 project with Angular Material + CDK to implement a calendar event:
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This is a sample project demonstrating Angular 17 using Angular Universal and styled with Angular Material.
 
-## Code scaffolding
+### Features:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+✅ Angular 17
 
-## Build
+🎨 Angular Material
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+🎨 Angular CDK
 
-## Running unit tests
+📦 Ready for deployment on Node.js platforms
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```
 
-## Running end-to-end tests
+## Getting Started
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/angular-material-calendar.git
+cd angular-material-calendar
+```
 
-## Further help
+### 2. Install Dependencies
+```bash
+npm install
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+
+### 2. Run Project
+```bash
+ng serve
+
+```
+
+## Available Scripts
+```bash
+npm run dev:ssr       # Development SSR with live reload
+npm run build:ssr     # Build for SSR (client + server)
+npm run serve:ssr     # Serve the built SSR app (Node.js)
+
+```
+
+## Serve Locally After Build
+```bash
+npm run build:ssr
+npm run serve:ssr
+
+
+```
+
+## Deployment Notes
+You can deploy the SSR build (dist/ folder) to any Node.js server:
+Run the following after deployment:
+
+```bash
+node dist/server/main.js
+
+```
+
+### License
+MIT License
+
