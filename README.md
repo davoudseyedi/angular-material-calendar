@@ -1,4 +1,4 @@
-# AngularSSR
+# AngularCalendarEvent
 
 Angular 17 project with Angular Material + CDK to implement a calendar event:
 
